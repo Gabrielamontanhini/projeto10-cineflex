@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components"
+import HomePage from "./pages/HomePage/HomePage"
+import SeatsPage from "./pages/SeatsPage/SeatsPage"
+import SessionsPage from "./pages/SessionsPage/SessionsPage"
+import SuccessPage from "./pages/SuccessPage/SuccessPage"
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default function App() {
+    return (
+        <>
+            <BrowserRouter>
+                <NavContainer> 
+                    <Link to="/"> CINEFLEX </Link>
+                </NavContainer>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/seats/:IdSession" element={<SeatsPage />} />
+                    <Route path="/sessions/:IdMovie" element={<SessionsPage />} />
+                    <Route path="/sucess" element={<SuccessPage />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
 }
 
-export default App;
+const NavContainer = styled.div`
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #C3CFD9;
+    color: #E8833A;
+    font-family: 'Roboto', sans-serif;
+    font-size: 34px;
+    position: fixed;
+    top: 0;
+    a {
+        text-decoration: none;
+        color: #E8833A;
+    }
+`
