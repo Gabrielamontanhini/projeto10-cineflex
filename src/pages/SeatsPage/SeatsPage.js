@@ -59,7 +59,7 @@ function bookSeat(id){
 
                 {seats.map((seat) =>
 
-                    <SeatItem  onClick={()=>bookSeat(seat.id)} id={seat.id} key={seat.id} free={seat.isAvailable} num={seat.name}>{seat.name}</SeatItem>
+                    <SeatItem data-test="seat" onClick={()=>bookSeat(seat.id)} id={seat.id} key={seat.id} free={seat.isAvailable} num={seat.name}>{seat.name}</SeatItem>
                 )}
                 
             </SeatsContainer>
@@ -84,6 +84,7 @@ function bookSeat(id){
 
                 <label htmlFor="name">Nome do Comprador:</label>
                 <input
+                    data-test="client-name"
                     id="name"
                     type="text"
                     placeholder="Digite seu nome..."
@@ -94,6 +95,7 @@ function bookSeat(id){
 
                 <label htmlFor="cpf">CPF do Comprador:</label>
                 <input
+                    data-test="client-cpf"
                     id="cpf"
                     type="number"
                     placeholder="Digite seu CPF..."
@@ -105,7 +107,7 @@ function bookSeat(id){
                 <button type="submit" >Faz dar certo pfv</button>
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={movie.posterURL} alt="poster" />
                 </div>
