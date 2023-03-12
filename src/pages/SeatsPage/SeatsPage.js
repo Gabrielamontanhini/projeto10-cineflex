@@ -47,12 +47,13 @@ export default function SeatsPage() {
     }
 
 
-function bookSeat(id, num){
-    alert(id)
+function bookSeat(id, num, isAvailable){
     setTakeSeat([...takeSeat, id])
     alert(num)
     setNumSeat([...numSeat, num])
-    
+    if (!isAvailable){
+        alert("Esse assento não está disponível")
+    }
 }
 
     return (
@@ -63,7 +64,17 @@ function bookSeat(id, num){
 
                 {seats.map((seat) =>
 
-                    <SeatItem data-test="seat" onClick={()=>bookSeat(seat.id, seat.name)} id={seat.id} num={seat.name} key={seat.id} free={seat.isAvailable} >{seat.name}</SeatItem>
+                    <SeatItem data-test="seat" 
+                    key={seat.id}
+                    id={seat.id}
+                    num={seat.name}
+                    free={seat.isAvailable}
+                    state={!seat.isAvailable ? "unavailable" :
+                                (takeSeat.includes(seat.id) ? "selected" : "available")}
+                                onClick={()=>bookSeat(seat.id, seat.name, seat.isAvailable)} 
+                    >
+                        {seat.name}
+                    </SeatItem>
                 )}
                 
             </SeatsContainer>
@@ -136,7 +147,7 @@ function bookSeat(id, num){
 const COLORS = [
     {
         background:"#C3CFD9",
-        borders:"#7B8B99"
+        borders:"#7B8B99" //disponivel
     },
     {
         background:"#FBE192",
@@ -144,9 +155,44 @@ const COLORS = [
     },
     {
         background:" #1AAE9E",
-        borders:"#0E7D71"
+        borders:"#0E7D71" //selecionado
     }
 ]
+
+const SeatItem = styled.div`
+
+    background-color:${props => {
+        if (!props.free) {
+            return "#FBE192"
+        } else {
+            if (props.free && props.state === "available") {
+                return "#C3CFD9"
+            } else {
+                return "#1AAE9E"
+            }
+        }
+    }};
+    border: 1px solid ${props => {
+        if (!props.free) {
+            return "#F7C52B"
+        } else {
+            if (props.free && props.state === "available"){
+                return "#7B8B99"
+            } else {
+                return "#0E7D71" 
+            }
+        }
+    }}; 
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    font-family: 'Roboto';
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+`
 
 const PageContainer = styled.div`
     display: flex;
@@ -280,39 +326,4 @@ const FooterContainer = styled.div`
             }
         }
     }
-`
-
-const SeatItem = styled.div`
-
-    background-color:${props => {
-        if (props.taken == true) {
-            return "#1AAE9E"
-        } else {
-            if (props.free == true) {
-                return "#C3CFD9"
-            } else {
-                return "#FBE192"
-            }
-        }
-    }};
-    border: 1px solid ${props => {
-        if (props.taken == true) {
-            return "#0E7D71"
-        } else {
-            if (props.free == true) {
-                return "#7B8B99"
-            } else {
-                return "#F7C52B"
-            }
-        }
-    }}; 
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
 `
