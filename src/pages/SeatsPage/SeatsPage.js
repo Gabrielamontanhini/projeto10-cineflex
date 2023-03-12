@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 
@@ -14,6 +14,7 @@ export default function SeatsPage() {
     const [seats, SetSeats] = useState([])
     const [movie, setMovie] = useState([])
     const [takeSeat, setTakeSeat] = useState([])
+    const [numSeat, setNumSeat]=useState([])
 
     const [name, setName] = useState("")
     const [cpf, setCpf] = useState()
@@ -26,6 +27,7 @@ export default function SeatsPage() {
         const promise = axios.get(url)
         promise.then(ans => {
             SetData(ans.data)
+            console.log(ans.data)
             SetDay(ans.data.day)
             setMovie(ans.data.movie)
             SetSeats(ans.data.seats)
@@ -39,15 +41,17 @@ export default function SeatsPage() {
         const urlPost = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
         const requisition = {ids: takeSeat, name, cpf }
         const promise = axios.post(urlPost, requisition)
-        promise.then(ans => navigate("/sucess"))
+        promise.then(ans => console.log("deu certo"))
         promise.catch(err => alert(err.response.data))
     console.log(requisition)
     }
 
 
-function bookSeat(id){
+function bookSeat(id, num){
     alert(id)
     setTakeSeat([...takeSeat, id])
+    alert(num)
+    setNumSeat([...numSeat, num])
     
 }
 
@@ -59,7 +63,7 @@ function bookSeat(id){
 
                 {seats.map((seat) =>
 
-                    <SeatItem data-test="seat" onClick={()=>bookSeat(seat.id)} id={seat.id} key={seat.id} free={seat.isAvailable} num={seat.name}>{seat.name}</SeatItem>
+                    <SeatItem data-test="seat" onClick={()=>bookSeat(seat.id, seat.name)} id={seat.id} num={seat.name} key={seat.id} free={seat.isAvailable} >{seat.name}</SeatItem>
                 )}
                 
             </SeatsContainer>
@@ -104,7 +108,15 @@ function bookSeat(id){
                     onChange={e => setCpf(e.target.value)}
                 />
 
-                <button type="submit" >Faz dar certo pfv</button>
+                <Link 
+                to={"/sucess"}
+                state={{"movie": movie,
+                        "data": data,
+                        "seats": numSeat,
+                        "name": name,
+                        "cpf":cpf
+                    }}
+                ><button type="submit" > Reservar assento(s)</button></Link>
             </FormContainer>
 
             <FooterContainer data-test="footer">
@@ -120,6 +132,21 @@ function bookSeat(id){
         </PageContainer>
     )
 }
+
+const COLORS = [
+    {
+        background:"#C3CFD9",
+        borders:"#7B8B99"
+    },
+    {
+        background:"#FBE192",
+        borders:"#F7C52B"
+    },
+    {
+        background:" #1AAE9E",
+        borders:"#0E7D71"
+    }
+]
 
 const PageContainer = styled.div`
     display: flex;
