@@ -41,7 +41,7 @@ export default function HomePage() {
 
                 {movies.map((mov) => (
                     <MovieContainer key={mov.title} data-test="movie">
-                        <Link to={`/sessions/${mov.id}`}> 
+                        <Link to={`/sessoes/${mov.id}`}> 
                         <img src={mov.posterURL} alt={mov.title} />
                         </Link>
                     </MovieContainer>

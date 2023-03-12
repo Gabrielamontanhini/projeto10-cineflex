@@ -15,9 +15,9 @@ export default function App() {
                 </NavContainer>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/seats/:IdSession" element={<SeatsPage />} />
-                    <Route path="/sessions/:IdMovie" element={<SessionsPage />} />
-                    <Route path="/sucess" element={<SuccessPage />} />
+                    <Route path="/assentos/:IdSessao" element={<SeatsPage />} />
+                    <Route path="/sessoes/:IdFilme" element={<SessionsPage />} />
+                    <Route path="/sucesso" element={<SuccessPage />} />
                 </Routes>
             </BrowserRouter>
         </>

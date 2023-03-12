@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 export default function SeatsPage() {
 
-    const { IdSession } = useParams()
+    const { IdSessao } = useParams()
 
     const [data, SetData] = useState([])
     const [day, SetDay] = useState([])
@@ -23,7 +23,7 @@ export default function SeatsPage() {
 
 
     useEffect(() => {
-        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${IdSession}/seats`
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${IdSessao}/seats`
         const promise = axios.get(url)
         promise.then(ans => {
             SetData(ans.data)
@@ -120,7 +120,7 @@ function bookSeat(id, num, isAvailable){
                 />
 
                 <Link 
-                to={"/sucess"}
+                to={"/sucesso"}
                 state={{"movie": movie,
                         "data": data,
                         "seats": numSeat,

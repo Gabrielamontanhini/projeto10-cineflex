@@ -6,10 +6,10 @@ import styled from "styled-components"
 
 export default function SessionsPage() {
     const [session, setSession] = useState(undefined)
-    const { IdMovie } = useParams()
+    const { IdFilme } = useParams()
 
     useEffect(() => {
-        const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${IdMovie}/showtimes`
+        const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${IdFilme}/showtimes`
         const promise = axios.get(url)
         promise.then(ans => {
             console.log(ans.data)
@@ -35,7 +35,7 @@ export default function SessionsPage() {
                         {day.weekday} - {day.date}
                         <ButtonsContainer>
                             {day.showtimes.map((sess) => (
-                            <Link to={`/seats/${sess.id}`} key={sess.id}> <button data-test="showtime">{sess.name}</button></Link>
+                            <Link to={`/assentos/${sess.id}`} key={sess.id}> <button data-test="showtime">{sess.name}</button></Link>
                             )
                             )}
                         </ButtonsContainer>
