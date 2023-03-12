@@ -1,5 +1,11 @@
-import { useState } from "react"
+/*import { useState } from "react"
 import styled from "styled-components"
+
+
+{seats.map((seat) =>
+
+    <Seat id={seat.id} key={seat.id} free={seat.isAvailable} num={seat.name} />
+)}
 
 export default function Seat({ id, free, num }) {
     const [taken, SetTaken] = useState(false)
@@ -13,7 +19,7 @@ export default function Seat({ id, free, num }) {
                 SetTaken(true)
             }
         } else {
-            alert("esse nnn porra")
+            alert("Esse assento não está disponível")
         }
 
     }
@@ -60,3 +66,4 @@ const SeatItem = styled.div`
     justify-content: center;
     margin: 5px 3px;
 `
+*/

@@ -1,0 +1,59 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Generate app version and deploy
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  BUCKET: production-driven-files
+  GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          yarn install
+          yarn global add vsce
+
+      - name: Create extension folder file and Build
+        run: |
+          cd $GITHUB_WORKSPACE
+          mkdir code-time-extension-installation-file
+          vsce package --out code-time-extension-installation-file
+          cd code-time-extension-installation-file
+          ls -r | head -n 1 | xargs -I '{}' mv {} driven-time.vsix
+
+      - name: Create extension version file
+        run: |
+          cd $GITHUB_WORKSPACE
+          mkdir code-time-extension-version
+          cd code-time-extension-version
+          node ../.github/workflows/scripts/generate-version-file.js
+
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ env.GCP_SA_KEY }}
+
+      - name: Upload to Cloud Storage
+        run: |
+          gsutil  rsync -d -r ./code-time-extension-version gs://${{ env.BUCKET }}/code-time-extension-version
+          gsutil  rsync -d -r ./code-time-extension-installation-file gs://${{ env.BUCKET }}/code-time-extension-installation-file
+
+      - name: Setup Cache Policy for json files
+        run: gsutil -m setmeta -h "Cache-Control:no-cache, no-store, must-revalidate, max-age=0" gs://${{ env.BUCKET }}/code-time-extension-version/*.json
+
+      - name: Setup Cache Policy  for vsix files
+        run: gsutil -m setmeta -h "Cache-Control:no-cache, no-store, must-revalidate, max-age=0" gs://${{ env.BUCKET }}/code-time-extension-installation-file/*.vsix

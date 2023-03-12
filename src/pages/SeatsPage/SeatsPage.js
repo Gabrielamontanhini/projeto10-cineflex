@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
-import Seat from "./Seat"
+import { useNavigate } from "react-router-dom"
 
 
 export default function SeatsPage() {
@@ -17,6 +17,8 @@ export default function SeatsPage() {
 
     const [name, setName] = useState("")
     const [cpf, setCpf] = useState()
+    const navigate = useNavigate()
+    
 
 
     useEffect(() => {
@@ -35,13 +37,19 @@ export default function SeatsPage() {
     function book(e) {
         e.preventDefault()
         const urlPost = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
-        const requisition = { name, cpf }
+        const requisition = {ids: takeSeat, name, cpf }
         const promise = axios.post(urlPost, requisition)
-        promise.then(ans => alert("deu"))
+        promise.then(ans => navigate("/sucess"))
         promise.catch(err => alert(err.response.data))
     console.log(requisition)
     }
 
+
+function bookSeat(id){
+    alert(id)
+    setTakeSeat([...takeSeat, id])
+    
+}
 
     return (
         <PageContainer>
@@ -51,9 +59,9 @@ export default function SeatsPage() {
 
                 {seats.map((seat) =>
 
-                    <Seat id={seat.id} key={seat.id} free={seat.isAvailable} num={seat.name} />
+                    <SeatItem  onClick={()=>bookSeat(seat.id)} id={seat.id} key={seat.id} free={seat.isAvailable} num={seat.name}>{seat.name}</SeatItem>
                 )}
-                ---
+                
             </SeatsContainer>
 
             <CaptionContainer>
@@ -243,4 +251,39 @@ const FooterContainer = styled.div`
             }
         }
     }
+`
+
+const SeatItem = styled.div`
+
+    background-color:${props => {
+        if (props.taken == true) {
+            return "#1AAE9E"
+        } else {
+            if (props.free == true) {
+                return "#C3CFD9"
+            } else {
+                return "#FBE192"
+            }
+        }
+    }};
+    border: 1px solid ${props => {
+        if (props.taken == true) {
+            return "#0E7D71"
+        } else {
+            if (props.free == true) {
+                return "#7B8B99"
+            } else {
+                return "#F7C52B"
+            }
+        }
+    }}; 
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    font-family: 'Roboto';
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
 `
