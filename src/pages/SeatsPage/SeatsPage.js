@@ -127,7 +127,7 @@ function bookSeat(id, num, isAvailable){
                         "name": name,
                         "cpf":cpf
                     }}
-                ><button type="submit" > Reservar assento(s)</button></Link>
+                ><button type="submit" data-test="book-seat-btn" > Reservar assento(s)</button></Link>
             </FormContainer>
 
             <FooterContainer >
