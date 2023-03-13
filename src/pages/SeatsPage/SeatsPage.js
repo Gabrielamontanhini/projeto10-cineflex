@@ -112,7 +112,7 @@ function bookSeat(id, num, isAvailable){
                 <input
                     data-test="client-cpf"
                     id="cpf"
-                    type="number"
+                    
                     placeholder="Digite seu CPF..."
                     required
                     value={cpf}
@@ -131,14 +131,17 @@ function bookSeat(id, num, isAvailable){
             </FormContainer>
 
             <FooterContainer >
-                <div data-test="footer">
+            <div data-test="footer">
+                <div >
                     <img src={movie.posterURL} alt="poster" />
                 </div>
                 <div>
                     <p>{movie.title}</p>
                     <p>{day.weekday} - {data.name}</p>
                 </div>
+                </div>
             </FooterContainer>
+            
 
         </PageContainer>
     )

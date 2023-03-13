@@ -24,6 +24,7 @@ export default function SuccessPage() {
                 )}</div>
             </TextContainer>
 
+
             <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {state.name}</p>
