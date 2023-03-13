@@ -17,10 +17,11 @@ export default function SuccessPage() {
                 <p>{state.data.day.date} - {state.data.name}</p>
             </TextContainer>
 
-            <TextContainer data-test="seats-info">
+            <TextContainer >
+                <div data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
                 {state.seats.map((s)=><p>Assento {s}</p>
-                )}
+                )}</div>
             </TextContainer>
 
             <TextContainer data-test="client-info">
@@ -29,7 +30,7 @@ export default function SuccessPage() {
                 <p>CPF: {state.cpf}</p>
             </TextContainer>
 
-            <Link to="/" data-test="go-home-btn"> <button>Voltar para Home</button></Link>
+            <Link to="/" > <button data-test="go-home-btn">Voltar para Home</button></Link>
         </PageContainer>
     )
 }

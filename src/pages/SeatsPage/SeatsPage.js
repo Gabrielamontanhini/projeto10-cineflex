@@ -49,7 +49,6 @@ export default function SeatsPage() {
 
 function bookSeat(id, num, isAvailable){
     setTakeSeat([...takeSeat, id])
-    alert(num)
     setNumSeat([...numSeat, num])
     if (!isAvailable){
         alert("Esse assento não está disponível")
@@ -63,8 +62,8 @@ function bookSeat(id, num, isAvailable){
             <SeatsContainer>
 
                 {seats.map((seat) =>
-
-                    <SeatItem data-test="seat" 
+                          <div data-test="seat">
+                    <SeatItem 
                     key={seat.id}
                     id={seat.id}
                     num={seat.name}
@@ -75,6 +74,7 @@ function bookSeat(id, num, isAvailable){
                     >
                         {seat.name}
                     </SeatItem>
+                    </div>
                 )}
                 
             </SeatsContainer>
@@ -130,8 +130,8 @@ function bookSeat(id, num, isAvailable){
                 ><button type="submit" > Reservar assento(s)</button></Link>
             </FormContainer>
 
-            <FooterContainer data-test="footer">
-                <div>
+            <FooterContainer >
+                <div data-test="footer">
                     <img src={movie.posterURL} alt="poster" />
                 </div>
                 <div>
