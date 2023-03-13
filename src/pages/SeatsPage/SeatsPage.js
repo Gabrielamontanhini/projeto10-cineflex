@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
-
+import InputMask from 'react-input-mask'
 
 export default function SeatsPage() {
 
@@ -109,7 +109,8 @@ function bookSeat(id, num, isAvailable){
                 />
 
                 <label htmlFor="cpf">CPF do Comprador:</label>
-                <input
+                <InputMask
+                mask="999.999.999-99"
                     data-test="client-cpf"
                     id="cpf"
                     
